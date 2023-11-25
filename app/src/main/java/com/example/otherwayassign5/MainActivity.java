@@ -94,6 +94,7 @@ ImageView pokeIV;
                     nameTV.setText(response.getString("name"));
                     heightTV2.setText(response.getString("height"));
                     weightTV.setText(response.getString("weight"));
+
                     Picasso.get().load(imgURL).into(pokeIV);
                     itemList.add(response.getString("name")+" "+numberStr);
                     adapter.notifyDataSetChanged();
