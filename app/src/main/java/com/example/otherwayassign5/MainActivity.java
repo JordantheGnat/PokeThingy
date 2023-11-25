@@ -18,7 +18,6 @@ import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +30,7 @@ ListView listView;
 Button submitButton;
 ArrayAdapter<String> adapter;
 EditText inputText;
-TextView numberTV,heightTV2,weightTV,baseHP,nameTV;
+TextView numberTV,heightTV2,weightTV,baseXP,nameTV,moveTV,abilityTV;
 ImageView pokeIV;
 
     @Override
@@ -44,10 +43,12 @@ ImageView pokeIV;
         numberTV = findViewById(R.id.numberTV);
         heightTV2 = findViewById(R.id.heightTV2);
         weightTV = findViewById(R.id.weightTV);
-        baseHP = findViewById(R.id.baseHP);
+        baseXP = findViewById(R.id.baseXP);
         nameTV  = findViewById(R.id.nameTV);
         pokeIV = findViewById(R.id.pokeIV);
         listView = findViewById(R.id.listView);
+        moveTV = findViewById(R.id.move);
+        abilityTV = findViewById(R.id.abilityTV);
         itemList =  new ArrayList<>();
         adapter =  new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,itemList);
         listView.setAdapter(adapter);
@@ -94,10 +95,15 @@ ImageView pokeIV;
                     nameTV.setText(response.getString("name"));
                     heightTV2.setText(response.getString("height"));
                     weightTV.setText(response.getString("weight"));
-
+                    baseXP.setText(response.getString("base_experience"));
+                    /*JSONObject firstLayer = response.getJSONObject("moves");
+                    JSONObject secondLayer = firstLayer.getJSONObject("0");
+                    JSONObject thirdLayer = secondLayer.getJSONObject("move"); this should work, but I cant get it to :/
+                    moveTV.setText(thirdLayer.getString("name"));*/
                     Picasso.get().load(imgURL).into(pokeIV);
                     itemList.add(response.getString("name")+" "+numberStr);
                     adapter.notifyDataSetChanged();
+                    
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -105,7 +111,7 @@ ImageView pokeIV;
 
             @Override
             public void onError(ANError anError) {
-                Log.i("Issue","Holding");//for some reason its holding here
+                Log.i("Issue","Holding");//for some reason its holding here nvm fixed it url was bad
             }
         });
     }
